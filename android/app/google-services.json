@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "897010684326",
+    "project_id": "healthmedical-754ec",
+    "storage_bucket": "healthmedical-754ec.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:897010684326:android:bf891139cf6a754924bf67",
+        "android_client_info": {
+          "package_name": "com.healthmedical"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "897010684326-fsakodqa0rrpr6e0nojae1skbqivacgb.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAWxTzX9StiqYnc0fb3CBTqkRYSZ6jamEo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "897010684326-fsakodqa0rrpr6e0nojae1skbqivacgb.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "897010684326-l89s6vqvnf3d5d830k9us7mnaja7noib.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.healthmedical"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

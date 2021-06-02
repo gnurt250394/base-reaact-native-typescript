@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">APP HEALTH MEDICAL</string>
+    <string name="default_notification_channel_id">jay-channel</string>
+    <string name="appCenterAnalytics_whenToEnableAnalytics" moduleConfig="true" translatable="false">ALWAYS_SEND</string>
+    <string name="appCenterCrashes_whenToSendCrashes" moduleConfig="true" translatable="false">ALWAYS_SEND</string>
+    <string moduleConfig="true" name="CodePushDeploymentKey">hQg_61nPhHvHU06KdK_EjteN2362nhBidFPab</string>
+</resources>
