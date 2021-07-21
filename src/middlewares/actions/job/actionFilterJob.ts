@@ -16,8 +16,8 @@ const _onSetActiveTooltip = () => {
     type: actionTypes.SET_ACTIVE_TOOLTIP,
   };
 };
-export const onSelectField = (field) => {
-  return (dispatch, getState) => {
+export const onSelectField = (field: any[]) => {
+  return (dispatch: any, getState: any) => {
     let date = new Date();
     // date.setHours(date.getHours() - 2);
     let data = field.map((item) => {
@@ -42,13 +42,13 @@ export const onSelectField = (field) => {
   };
 };
 
-export const onSelectRegion = (region) => {
-  return (dispatch, getState) => {
+export const onSelectRegion = (region: object) => {
+  return (dispatch: any, getState: any) => {
     dispatch(_onSelectRegion(region));
   };
 };
 export const onActiveTooltipField = () => {
-  return (dispatch, getState) => {
+  return (dispatch: any, getState: any) => {
     dispatch(_onSetActiveTooltip());
   };
 };

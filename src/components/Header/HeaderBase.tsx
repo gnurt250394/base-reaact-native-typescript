@@ -9,17 +9,22 @@ import {
   StatusBar,
   TouchableOpacity,
   StyleSheet,
+  ImageSourcePropType,
 } from 'react-native';
 import images from 'res/images';
 
 import colors from 'res/colors';
 import sizes from 'res/sizes';
-interface Props {
+import ButtonBase from 'components/button/ButtonBase';
+import {CommonScreen} from 'routers/screenName';
+export interface HeaderBaseProps {
   title?: string;
   hideBackButton?: boolean;
   onBack?: () => void;
   buttonRight?: React.ReactNode;
   buttonLeft?: React.ReactNode;
+  iconLeft?: ImageSourcePropType;
+  hideButtonRight?: boolean;
 }
 const HeaderBase = ({
   title,
@@ -27,31 +32,42 @@ const HeaderBase = ({
   onBack,
   buttonRight,
   buttonLeft,
-}: Props) => {
+  iconLeft,
+  hideButtonRight,
+}: HeaderBaseProps) => {
   const router = useNavigation();
 
-  const onPressBack = () => (onBack ? onBack : router.goBack());
+  const onPressBack = () => (onBack ? onBack() : router.goBack());
+  const onPressRight = () => router.navigate(CommonScreen.NotificationScreen);
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.groupHeader}>
         <View style={styles.button}>
-          {hideBackButton ? null : router.canGoBack() ? (
-            buttonLeft ? (
-              buttonLeft
-            ) : (
-              <TouchableOpacity
-                onPress={onPressBack}
-                hitSlop={{top: 15, left: 15, right: 15, bottom: 15}}
-                style={[styles.flex, styles.buttonBack]}>
-                <Image source={images.ic_back} style={styles.iconBack} />
-              </TouchableOpacity>
-            )
-          ) : null}
+          {hideBackButton ? null : buttonLeft ? (
+            buttonLeft
+          ) : (
+            <ButtonBase
+              onPress={onPressBack}
+              hitSlop={{top: 15, left: 15, right: 15, bottom: 15}}
+              iconLeft={iconLeft ? iconLeft : images.ic_back}
+              style={[styles.buttonBack]}
+            />
+          )}
         </View>
         <View style={styles.containerTitle}>
           <Text style={styles.txtTitle}>{title}</Text>
         </View>
-        <View style={styles.button}>{buttonRight ? buttonRight : null}</View>
+        <View style={styles.button}>
+          {hideButtonRight ? null : buttonRight ? (
+            buttonRight
+          ) : (
+            <ButtonBase
+              onPress={onPressRight}
+              iconLeft={images.ic_notification}
+              style={styles.buttonHeader}
+            />
+          )}
+        </View>
       </View>
     </SafeAreaView>
   );
@@ -60,18 +76,21 @@ const HeaderBase = ({
 export default HeaderBase;
 
 const styles = StyleSheet.create({
-  buttonBack: {alignItems: 'center', justifyContent: 'center'},
+  buttonHeader: {},
+  buttonBack: {
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
   flex: {flex: 1},
   txtTitle: {
-    textAlign: 'center',
-    fontSize: sizes._20sdp,
+    fontSize: sizes._14sdp,
     color: colors.white,
     fontWeight: 'bold',
   },
   containerTitle: {
-    flex: 3,
-    alignItems: 'center',
-    paddingHorizontal: 10,
+    flex: 5,
+    alignItems: 'flex-start',
+    paddingRight: 10,
   },
   iconBack: {
     height: 18,
@@ -79,19 +98,17 @@ const styles = StyleSheet.create({
     resizeMode: 'contain',
   },
   button: {
-    flex: 1,
+    flex: 2,
     alignItems: 'center',
     justifyContent: 'center',
   },
   groupHeader: {
     flexDirection: 'row',
-    minHeight: 60,
     alignItems: 'center',
     paddingBottom: 10,
-    paddingTop: 10,
   },
   container: {
     backgroundColor: colors.default,
-    paddingTop: Platform.OS == 'android' ? StatusBar.currentHeight : 0,
+    paddingTop: sizes._statusbar_height,
   },
 });

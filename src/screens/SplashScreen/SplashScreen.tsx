@@ -3,17 +3,17 @@ import {View, Text, Image} from 'react-native';
 import MaskedView from '@react-native-community/masked-view';
 import {navigate, reset} from 'routers/service/RootNavigation';
 import {useSelector} from 'react-redux';
-import {AuthScreens, StartScreen} from 'routers/screenName';
 import styles from './styles';
 
 import strings from 'res/strings';
 import {BaseNavigationProps} from 'routers/BaseNavigationProps';
 import {MainParamList} from 'routers';
 import {AuthReducer, UserProfile} from 'middlewares/reducers/auth/loginReducer';
+import {CommonScreen} from 'routers/screenName';
 
 const SplashScreen = ({
   navigation,
-}: BaseNavigationProps<MainParamList, StartScreen.Splash>) => {
+}: BaseNavigationProps<MainParamList, CommonScreen.Splash>) => {
   const userProfile: AuthReducer = useSelector(
     (state: any) => state.UserProfile,
   );
@@ -21,7 +21,7 @@ const SplashScreen = ({
   useEffect(() => {
     setTimeout(() => {
       console.log('userProfile?.position: ', userProfile?.position);
-      reset(StartScreen.Wellcome);
+      reset(CommonScreen.Home);
     }, 2000);
   }, []);
   return (
@@ -36,8 +36,7 @@ const SplashScreen = ({
       {/* Shows behind the mask, you can put anything here, such as an image */}
       <Image
         source={{
-          uri:
-            'https://live.staticflickr.com/7491/15192147744_a552734f63_b.jpg',
+          uri: 'https://live.staticflickr.com/7491/15192147744_a552734f63_b.jpg',
         }}
         style={styles.imageMaker}
       />

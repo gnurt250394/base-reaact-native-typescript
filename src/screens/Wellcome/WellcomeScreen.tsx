@@ -8,15 +8,15 @@ import TextBase from 'components/text/TextBase';
 import ButtonBase from 'components/button/ButtonBase';
 import {BaseNavigationProps} from 'routers/BaseNavigationProps';
 import {MainParamList} from 'routers';
-import {AuthScreens, StartScreen} from 'routers/screenName';
 import {TypeScreenParam} from 'routers/service/NavigationParams';
+import {CommonScreen} from 'routers/screenName';
 interface WellcomeScreenProps {}
 
 const WellcomeScreen = ({
   navigation,
-}: BaseNavigationProps<MainParamList, StartScreen.Wellcome>) => {
+}: BaseNavigationProps<MainParamList, CommonScreen.Wellcome>) => {
   const onLoginOrRegister = (type: TypeScreenParam) => () => {
-    navigation.replace(AuthScreens.Login, {typeScreen: type});
+    navigation.replace(CommonScreen.LoginScreen, {typeScreen: type});
   };
   return (
     <Container

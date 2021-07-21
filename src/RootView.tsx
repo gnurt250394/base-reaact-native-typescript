@@ -19,7 +19,7 @@ const RootView = ({children}: Props) => {
   return (
     <View style={[styles.container]}>
       <StatusBar backgroundColor={colors.transparent} translucent={true} />
-      <UpdateApp />
+      {!__DEV__ && <UpdateApp />}
       {children}
       {/* <PushController /> */}
       <InternetConnection />

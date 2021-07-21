@@ -1,5 +1,4 @@
 import Container from 'components/Container';
-import apis from 'controllers/apis';
 import React, {useEffect, useState} from 'react';
 import {
   FlatList,
@@ -12,18 +11,30 @@ import {
 import moment from 'moment';
 
 import {navigate} from 'routers/service/RootNavigation';
-import screenName from 'routers/screenName';
 import {formatData} from 'utils/array-utils';
 import colors from 'res/colors';
 import strings from 'res/strings';
-const NotificationScreen = ({navigation, route}) => {
-  const [data, setData] = useState([]);
-  const [page, setPage] = useState(0);
-  const [size, setSize] = useState(20);
+import {BaseNavigationProps} from 'routers/BaseNavigationProps';
+import {MainParamList} from 'routers';
+import {CommonScreen, PartnerScreens} from 'routers/screenName';
+import sizes from 'res/sizes';
+import TextBase from 'components/text/TextBase';
+import NotificationApi from 'network/apis/notification/NotificationApi';
+import {NotificationParams} from 'network/apis/notification/NotificationRequest';
+import {NotificationResponse} from 'network/apis/notification/NotificationResponse';
+const NotificationScreen = ({
+  navigation,
+  route,
+}: BaseNavigationProps<MainParamList>) => {
+  const [data, setData] = useState<any[]>([]);
+  const [page, setPage] = useState<number>(0);
+  const [size, setSize] = useState<number>(20);
 
   const getData = async () => {
     try {
-      let res = await apis.fetch(apis.path.listNotifications, {page, size});
+      let res = await NotificationApi.getListNotification<NotificationResponse>(
+        {page, size},
+      );
       setData(formatData(res?.data?.data, page));
     } catch (error) {
       setData(formatData([], page));
@@ -32,53 +43,53 @@ const NotificationScreen = ({navigation, route}) => {
   useEffect(() => {
     getData();
   }, []);
-  const getDate = (item, index) => {
+  const getDate = (item: any, index: number) => {
     let notiTime = moment(item.create_at);
     if (index == 0) {
       let date = moment();
       if (date.format('DD/MM/YYYY') == notiTime.format('DD/MM/YYYY'))
-        return <Text style={styles.txtDate}>Hôm nay</Text>;
+        return <TextBase style={styles.txtDate}>Hôm nay</TextBase>;
       else
         return (
-          <Text style={styles.txtDate}>
+          <TextBase style={styles.txtDate}>
             Ngày {notiTime.format('DD/MM/YYYY')}
-          </Text>
+          </TextBase>
         );
     } else {
       let preNoti = data[index - 1];
       let preNotiDate = moment(preNoti.create_at);
       if (preNotiDate.format('DD/MM/YYYY') != notiTime.format('DD/MM/YYYY'))
         return (
-          <Text style={styles.txtDate}>
+          <TextBase style={styles.txtDate}>
             Ngày {notiTime.format('DD/MM/YYYY')}
-          </Text>
+          </TextBase>
         );
     }
     return null;
   };
-  const onReadNoti = async (id) => {
+  const onReadNoti = async (id: string) => {
     try {
-      let res = await apis.put(apis.path.readNotifications + '/' + id);
+      let res = await NotificationApi.readNotification(id);
     } catch (error) {}
   };
-  const onViewNoti = (item) => () => {
+  const onViewNoti = (item: any) => () => {
     const data = JSON.parse(item?.data);
     console.log('data: ', data);
 
     onReadNoti(item?._id);
-    switch (item?.type) {
-      case strings.type.jobRecived:
-        navigate(screenName.receivedCv);
-        break;
-      case strings.type.requestInterviewRecived:
-        navigate(screenName.detailRequestInterviewScreen, {id: data?._id});
-        break;
+    // switch (item?.type) {
+    //   case TypeCommon.jobRecived:
+    //     navigate(CommonScreen.ReceivedCvScreen);
+    //     break;
+    //   case TypeCommon.requestInterviewRecived:
+    //     navigate(CommonScreen.DetailRequestInterviewScreen, {id: data?._id});
+    //     break;
 
-      default:
-        break;
-    }
+    //   default:
+    //     break;
+    // }
   };
-  const _renderItem = ({item, index}) => {
+  const _renderItem = ({item, index}: any) => {
     return (
       <View style={{}}>
         {getDate(item, index)}
@@ -90,18 +101,18 @@ const NotificationScreen = ({navigation, route}) => {
             },
             styles.containerButton,
           ]}>
-          <Text style={styles.txtNotiTitle}>{item?.title}</Text>
-          <Text style={styles.txtNotiBody}>{item?.body}</Text>
+          <TextBase style={styles.txtNotiTitle}>{item?.title}</TextBase>
+          <TextBase style={styles.txtNotiBody}>{item?.body}</TextBase>
         </TouchableOpacity>
       </View>
     );
   };
   const _onEndReached = () => {
-    if (data?.length >= (page + 1) * size) setPage((page) => page + 1);
+    if (data?.length >= (page + 1) * size) setPage(page => page + 1);
   };
-  const _keyExtractor = (item, index) => index.toString();
+  const _keyExtractor = (item: any, index: number) => index.toString();
   return (
-    <Container title="Thông báo" hideBackButton>
+    <Container title="Thông báo" hideButtonRight={true}>
       <FlatList
         data={data}
         renderItem={_renderItem}
@@ -116,7 +127,7 @@ const styles = StyleSheet.create({
   txtNotiBody: {color: colors.gray},
   txtNotiTitle: {
     color: colors.text,
-    fontSize: 16,
+    fontSize: sizes._16sdp,
     fontWeight: 'bold',
     paddingBottom: 5,
   },

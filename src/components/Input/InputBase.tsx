@@ -1,65 +1,91 @@
-import React, {useEffect, useState} from 'react';
+import {ScrollContext} from 'components/Scroll/ScrollWrapper';
+import TextBase from 'components/text/TextBase';
+import React, {useContext, useState} from 'react';
 import {
-  Text,
-  StyleSheet,
+  Image,
+  ImageSourcePropType,
   StyleProp,
-  TextStyle,
+  StyleSheet,
   TextInput,
   TextInputProps,
-  View,
-  Image,
+  TextStyle,
   TouchableOpacity,
-  ImageSourcePropType,
+  View,
   ViewStyle,
 } from 'react-native';
-import {useSelector} from 'react-redux';
-import {LanguagesReducer} from 'middlewares/reducers/language';
-import sizes from 'res/sizes';
 import colors from 'res/colors';
-import TextBase from 'components/text/TextBase';
 import images from 'res/images';
+import sizes from 'res/sizes';
+
+export type MessageType = {
+  [key: string]: string;
+};
+export type TouchedType = {
+  [key: string]: boolean;
+};
 interface Props extends TextInputProps {
   children?: React.ReactNode;
   style?: StyleProp<TextStyle>;
-  isError?: boolean;
-  messagesError?: string;
-  label?: string;
+  errors?: MessageType;
+  touched?: TouchedType;
+  label?: string | React.ReactNode;
   labelStyle?: StyleProp<TextStyle>;
   iconRight?: ImageSourcePropType;
   onPressRight?: () => void;
   styleError?: StyleProp<ViewStyle>;
+  secureTextEntry?: boolean;
+  name?: string;
+  isRequired?: boolean;
 }
 
 const InputBase = ({
   children,
   value,
   style,
-  isError,
-  messagesError,
+  errors,
   label,
   labelStyle,
   secureTextEntry,
   iconRight,
   onPressRight,
   styleError,
+  touched,
+  name,
+  isRequired,
   ...props
 }: Props) => {
+  const {scrollTracker} = useContext(ScrollContext);
   const [isShowPass, setIsShowPass] = useState(false);
-  const [secureText, setSecureText] = useState(() => secureTextEntry);
+  const [secureText, setSecureText] = useState<boolean>(
+    () => secureTextEntry || false,
+  );
   const onPress = () => {
     secureTextEntry && setIsShowPass(isShowPass => !isShowPass);
     onPressRight && onPressRight();
   };
+  const renderLabel = (
+    label: string | React.ReactNode,
+    isRequired?: boolean,
+  ) => (
+    <TextBase style={styles.txLabel}>
+      {label}{' '}
+      {isRequired ? <TextBase style={styles.txRequire}>*</TextBase> : ''}
+    </TextBase>
+  );
   return (
-    <View style={[{paddingBottom: sizes._17sdp}]}>
-      {label ? (
-        <TextBase text={label} style={[styles.txtLabel, labelStyle]} />
-      ) : null}
+    <View
+      onLayout={event => {
+        if (scrollTracker && name) scrollTracker(event.target, name);
+      }}
+      style={[{paddingBottom: sizes._17sdp}]}>
+      {label ? renderLabel(label, isRequired) : null}
       <View
         style={[
           styles.txt,
-          isError ? [styles.borderError, styleError] : {},
           style,
+          errors && !!errors[name || ''] && touched && !!touched[name || '']
+            ? [styles.borderError, styleError]
+            : {},
         ]}>
         <TextInput
           secureTextEntry={secureTextEntry && !isShowPass ? secureText : false}
@@ -85,8 +111,8 @@ const InputBase = ({
           </TouchableOpacity>
         )}
       </View>
-      {messagesError && isError ? (
-        <TextBase text={messagesError} style={[styles.txtError]} />
+      {errors && !!errors[name || ''] && touched && !!touched[name || ''] ? (
+        <TextBase text={errors[name || '']} style={[styles.txtError]} />
       ) : null}
     </View>
   );
@@ -94,6 +120,14 @@ const InputBase = ({
 export default InputBase;
 
 const styles = StyleSheet.create({
+  txRequire: {
+    color: colors.red,
+  },
+  txLabel: {
+    color: colors.teal,
+    fontSize: 14,
+    textAlign: 'left',
+  },
   input: {
     flex: 1,
     height: '100%',

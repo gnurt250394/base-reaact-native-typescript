@@ -1,50 +1,53 @@
 // In App.js in a new project
 
-import messaging, {
-  FirebaseMessagingTypes,
-} from '@react-native-firebase/messaging';
 import {useReduxDevToolsExtension} from '@react-navigation/devtools';
-import {createDrawerNavigator} from '@react-navigation/drawer';
 import {NavigationContainer} from '@react-navigation/native';
-import {
-  createStackNavigator,
-  StackHeaderTitleProps,
-} from '@react-navigation/stack';
+import {createStackNavigator} from '@react-navigation/stack';
+import {AuthReducer} from 'middlewares/reducers/auth/loginReducer';
 import * as React from 'react';
+import 'react-native-gesture-handler';
 import {useSelector} from 'react-redux';
 import colors from 'res/colors';
-import strings from 'res/strings';
-import LoginScreen from 'screens/auth/LoginScreen';
-import SplashScreen from 'screens/SplashScreen/SplashScreen';
-import WellcomeScreen from 'screens/Wellcome/WellcomeScreen';
-import {AuthScreens, BottomTabHomeScreens, StartScreen} from './screenName';
-import {LoginParams} from './service/NavigationParams';
+import CommonData from './data/CommonData';
+import UserData from './data/UserData';
+import {CommonScreen} from './screenName';
+import {
+  CreateJobParams,
+  DetailCvParams,
+  DetailJobParams,
+  DetailPartnerParams,
+  DetailRequestInterviewParams,
+  EditProfileParams,
+  ForgotPasswordParams,
+  GooglePlacesInputParams,
+  LoginParams,
+  MapDirectionParams,
+  SelectLocationParams,
+  UpdateFieldParams,
+} from './service/NavigationParams';
 import {isReadyRef, navigationRef} from './service/RootNavigation';
-import TabsStack from './TabStack';
-import TabsStackPartner from './TabStackPartner';
 
 const RootStack = createStackNavigator();
 const Stack = createStackNavigator();
-const Drawer = createDrawerNavigator();
 export interface MainParamList extends Record<string, object | undefined> {
+  // ************************** auth *********************************//
+  [CommonScreen.LoginScreen]: LoginParams;
+  [CommonScreen.ForgotPasswordScreen]: ForgotPasswordParams;
+
   //* ************************************ Common screens ************************************* *//
-  [AuthScreens.Login]: LoginParams;
+  [CommonScreen.UpdateFieldScreen]: UpdateFieldParams;
+  [CommonScreen.GooglePlacesInputScreen]: GooglePlacesInputParams;
+  [CommonScreen.DetaiJobScreen]: DetailJobParams;
+  [CommonScreen.EditProfileScreen]: EditProfileParams;
+  [CommonScreen.DetailPartnerScreen]: DetailPartnerParams;
+  [CommonScreen.DetailRequestInterviewScreen]: DetailRequestInterviewParams; //
+  [CommonScreen.MapDirectionScreen]: MapDirectionParams; //
+  [CommonScreen.SelectLocationScreen]: SelectLocationParams; //
+  [CommonScreen.DetailCvScreen]: DetailCvParams; //
+  [CommonScreen.CreateJobScreen]: CreateJobParams; //
 }
 
 // Define multiple groups of screens in objects like this
-const commonScreens = {
-  [StartScreen.Splash]: SplashScreen,
-  [StartScreen.Wellcome]: WellcomeScreen,
-};
-
-const userScreens = {
-  // [BottomTabHomeScreens.Home]: TabsStack,
-  [AuthScreens.Login]: LoginScreen,
-};
-// const partnerScreens = {
-//   // [screenName.TABHOME]: TabsStack,
-//   [screenName.TABHOME]: TabsStackPartner,
-// };
 
 const MyTheme = {
   dark: true,
@@ -59,46 +62,52 @@ const MyTheme = {
 };
 
 function RootApp() {
-  React.useEffect(() => {
-    initNoti();
-    const unsubscribe = messaging().onMessage(
-      async (remoteMessage: FirebaseMessagingTypes.RemoteMessage) => {},
-    );
+  // React.useEffect(() => {
+  //   initNoti();
+  //   const unsubscribe = messaging().onMessage(
+  //     async (remoteMessage: FirebaseMessagingTypes.RemoteMessage) => {},
+  //   );
 
-    // return unsubscribe;
-    return () => {
-      unsubscribe();
-      isReadyRef.current = false;
-    };
-  }, []);
+  //   // return unsubscribe;
+  //   return () => {
+  //     unsubscribe();
+  //     isReadyRef.current = false;
+  //   };
+  // }, []);
 
-  const initNoti = async () => {
-    try {
-      // Assume a message-notification contains a "type" property in the data payload of the screen to open
-      let permission = await messaging().requestPermission();
+  // const initNoti = async () => {
+  //   try {
+  //     // Assume a message-notification contains a "type" property in the data payload of the screen to open
+  //     let permission = await messaging().requestPermission();
 
-      messaging().onNotificationOpenedApp(remoteMessage => {
-        console.log(
-          'Notification caused app to open from background state:',
-          remoteMessage.notification,
-        );
-      });
+  //     messaging().onNotificationOpenedApp(remoteMessage => {
+  //       console.log(
+  //         'Notification caused app to open from background state:',
+  //         remoteMessage.notification,
+  //       );
+  //     });
 
-      // Check whether an initial notification is available
-      messaging()
-        .getInitialNotification()
-        .then(remoteMessage => {
-          if (remoteMessage) {
-            console.log(
-              'Notification caused app to open from quit state:',
-              remoteMessage.notification,
-            );
-          }
-        });
-    } catch (error) {}
-  };
-  // const userProfile = useSelector(state => state.userProfile);
-  // const result = React.useMemo(() => userScreens[userProfile?.position]);
+  //     // Check whether an initial notification is available
+  //     messaging()
+  //       .getInitialNotification()
+  //       .then(remoteMessage => {
+  //         if (remoteMessage) {
+  //           console.log(
+  //             'Notification caused app to open from quit state:',
+  //             remoteMessage.notification,
+  //           );
+  //         }
+  //       });
+  //   } catch (error) {}
+  // };
+  const userProfile: AuthReducer = useSelector(
+    (state: any) => state.userProfile,
+  );
+  // const result = React.useMemo(
+  //   () => (userProfile.position == 'user' ? UserData : PartnerData),
+  //   [userProfile.position],
+  // );
+  // console.log('result: ', result);
 
   useReduxDevToolsExtension(navigationRef);
   return (
@@ -117,7 +126,7 @@ function RootApp() {
       // }}
       ref={navigationRef}>
       <RootStack.Navigator
-        initialRouteName={StartScreen.Splash}
+        initialRouteName={CommonScreen.Splash}
         screenOptions={{
           headerStyle: {
             backgroundColor: colors.default,
@@ -130,9 +139,9 @@ function RootApp() {
         }}>
         {Object.entries({
           // Use the screens normally
-          ...commonScreens,
+          ...CommonData,
           // Use some screens conditionally based on some condition
-          ...userScreens,
+          ...UserData,
         }).map(([name, component], index) => {
           return (
             <RootStack.Screen

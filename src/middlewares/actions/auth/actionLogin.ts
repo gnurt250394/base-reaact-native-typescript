@@ -1,21 +1,25 @@
 import actionTypes from '../actionTypes';
 import { goBack, navigate, reset } from 'routers/service/RootNavigation';
-import screenName from 'routers/screenName';
 import messaging from '@react-native-firebase/messaging';
 import auth from '@react-native-firebase/auth';
 import snackbarUtils from 'utils/snackbar-utils';
 import { hideLoading, showLoading } from 'components/Loading/LoadingComponent';
 import apis from 'network/apis';
-import { LoginApi, LogoutApi, RegisterApi } from 'network/apis/auth/AuthApi';
+import { CommonScreen, UserScreens } from 'routers/screenName';
+import AuthApi from 'network/apis/auth/AuthApi';
+import { BaseResponse } from 'network/BaseResponse';
+import { LoginResponse } from 'network/apis/auth/AuthResponse';
+import ResponseCode from 'network/ResponseCode';
+import { RoleType } from 'common/Constants';
 export const _login = (payload: any) => {
-  console.log('payload: ', payload);
+
   return {
     type: actionTypes.LOGIN,
     payload,
   };
 };
-const _onSelectPosition = (payload: any) => {
-  console.log('payload: ', payload);
+const _onSelectPosition = (payload: RoleType) => {
+
   return {
     type: actionTypes.SELECT_POSITION,
     payload,
@@ -28,30 +32,32 @@ export const _logout = () => {
 };
 export const login = (phone: string, password: string, isBack: boolean) => {
   return async (dispatch: any, getState: any) => {
-    // let { latitude, longitude, address } = getState().job?.region;
+    let accessToken = await messaging().getToken();
+    let { latitude, longitude, address } = getState().job?.region || '';
     let params = {
       phone,
       password,
-      // latitude,
-      // longitude,
-      // address,
+      latitude,
+      longitude,
+      address,
+      accessToken
     };
     showLoading();
-    LoginApi(params)
+    AuthApi.LoginApi<LoginResponse>(params)
       .then(res => {
+
         hideLoading();
-        if (res.status == 200 && res.data.code == 0) {
+        if (res.status == ResponseCode.SUCCESS) {
           snackbarUtils.show('Đăng nhập thành công', 'success');
-          dispatch(_login(res.data.data));
+          dispatch(_login(res.data));
           if (isBack) {
             goBack();
           } else {
-            navigate(screenName.TABHOME);
+            navigate(UserScreens.HomeScreen);
           }
         } else {
           snackbarUtils.show(
-            res?.data?.message?.message ||
-            res.data.message ||
+            res.message ||
             'Đăng nhập thất bại',
             'danger',
           );
@@ -64,6 +70,7 @@ export const login = (phone: string, password: string, isBack: boolean) => {
 };
 export const register = (phone: string, password: string, isBack: boolean) => {
   return async (dispatch: any, getState: any) => {
+    let accessToken = await messaging().getToken();
     let { latitude, longitude, address } = getState().job?.region;
     let params = {
       phone,
@@ -71,26 +78,26 @@ export const register = (phone: string, password: string, isBack: boolean) => {
       latitude,
       longitude,
       address,
+      accessToken
     };
     showLoading();
-    let token = await messaging().getToken();
-    RegisterApi(params)
+    AuthApi.RegisterApi<LoginResponse>(params)
       .then(res => {
         hideLoading();
-        if (res?.data?.code == 0) {
+        if (res?.status == ResponseCode.SUCCESS) {
           snackbarUtils.show('Đăng ký thành công', 'success');
-          dispatch(_login(res?.data?.data));
+          dispatch(_login(res?.data));
           if (isBack) {
             goBack();
           } else {
-            navigate(screenName.updateField, {
-              screen: screenName.TABHOME,
+            navigate(CommonScreen.UpdateFieldScreen, {
+              screen: UserScreens.HomeScreen,
               // params: {user: 'jane'},
             });
           }
         } else {
           snackbarUtils.show(
-            res?.data?.message || 'Đăng ký thất bại',
+            res?.message || 'Đăng ký thất bại',
             'danger',
           );
         }
@@ -100,18 +107,20 @@ export const register = (phone: string, password: string, isBack: boolean) => {
       });
   };
 };
-export const forgotPassword = (phone, password, isBack) => {
-  return async (dispatch, getState) => {
+export const forgotPassword = (phone: string, password: string, isBack: boolean) => {
+  return async (dispatch: any, getState: any) => {
     let { latitude, longitude, address } = getState().job?.region;
+    let accessToken = await messaging().getToken();
     let params = {
       phone,
       password,
       latitude,
       longitude,
       address,
+      accessToken
     };
     showLoading();
-    LoginApi(params, { accesstoken: token })
+    AuthApi.ForgotPasswordApi<LoginResponse>(params)
       .then(res => {
         hideLoading();
         if (res?.data?.code == 0) {
@@ -120,11 +129,11 @@ export const forgotPassword = (phone, password, isBack) => {
           if (isBack) {
             goBack();
           } else {
-            navigate(screenName.TABHOME);
+            navigate(UserScreens.HomeScreen);
           }
         } else {
           snackbarUtils.show(
-            res?.data?.message || 'Lấy lại mật khẩu thất bại',
+            res?.message || 'Lấy lại mật khẩu thất bại',
             'danger',
           );
         }
@@ -139,15 +148,15 @@ export const logout = () => async (dispatch: any, getState: any) => {
   try {
     if (auth().currentUser) auth().signOut();
     let token = await messaging().getToken();
-    let res = await LogoutApi(token);
+    let res = await AuthApi.LogoutApi(token);
     dispatch(_logout());
-    navigate(screenName.LOGIN);
+    // navigate(CommonScreen.LoginScreen, { typeScreen: 'login' });
   } catch (error) {
-    console.log('error: ', error);
+
     snackbarUtils.show('Có lỗi xảy ra vui lòng thử lại', 'danger');
   }
 };
-export const onSelectPosition = (position: string) => {
+export const onSelectPosition = (position: RoleType) => {
   return (dispatch: any, getState: any) => {
     dispatch(_onSelectPosition(position));
   };

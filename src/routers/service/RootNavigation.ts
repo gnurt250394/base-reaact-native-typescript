@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { StackActions, NavigationContainerRef, CommonActions } from '@react-navigation/native';
 export const navigationRef = React.createRef<NavigationContainerRef>();
-export const isReadyRef = React.createRef<boolean>();
+export const isReadyRef: any = React.createRef<boolean>();
 export function navigate(name: string, params?: object) {
   if (isReadyRef.current && navigationRef.current) {
     // Perform navigation if the app has mounted
@@ -20,9 +20,14 @@ export function goBack() {
     // You can ignore this, or add these actions to a queue you can call later
   }
 }
-export function push(...args) {
+export function push(screenName: string, params?: object) {
   if (isReadyRef.current && navigationRef.current) {
-    navigationRef.current?.dispatch(StackActions.push(...args));
+    navigationRef.current?.dispatch(StackActions.push(screenName, params));
+  }
+}
+export function replace(screenName: string, params?: object) {
+  if (isReadyRef.current && navigationRef.current) {
+    navigationRef.current?.dispatch(StackActions.replace(screenName, params));
   }
 }
 export function reset(name: string, params?: object) {

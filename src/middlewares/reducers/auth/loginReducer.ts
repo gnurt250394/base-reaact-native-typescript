@@ -1,5 +1,6 @@
 import { ActionPersist } from './../../actions/ActionData';
 import actionTypes from 'middlewares/actions/actionTypes';
+import { RoleType } from 'common/Constants';
 export interface UserProfile {
   loginToken?: string;
   [key: string]: any
@@ -8,7 +9,7 @@ export interface AuthReducer {
   user: UserProfile;
   isLogin: boolean;
   count: number;
-  position: string
+  position: RoleType | ''
   field: any
 }
 const initialState: AuthReducer = {

@@ -9,9 +9,20 @@ import codepushUtils from 'utils/codepush-utils';
 import colors from 'res/colors';
 const VERSION = DeviceInfo.getVersion() + '.' + DeviceInfo.getBuildNumber();
 
-class UpdateApp extends Component {
-  constructor() {
-    super();
+interface IProgress {
+  receivedBytes: number;
+  totalBytes: number;
+}
+interface IProps {}
+interface IState {
+  isVisibleModal?: boolean;
+  restartAllowed?: boolean;
+  syncMessage?: string;
+  progress?: IProgress;
+}
+class UpdateApp extends Component<IProps, IState> {
+  constructor(props: IProps) {
+    super(props);
     this.state = {restartAllowed: true, isVisibleModal: false};
   }
 
@@ -22,15 +33,15 @@ class UpdateApp extends Component {
     //   // this update has run, and it had a description provided
     //   // with it upon release, let's show it to the end user
     //   if (update?.isFirstRun && update?.description) {
-        // Display a "what's new?" modal
-        codepushUtils
-          .checkupDate()
-          .then((update) => {
-            if (update) {
-              this.setState({isVisibleModal: true});
-            }
-          })
-          .catch((err) => {});
+    // Display a "what's new?" modal
+    codepushUtils
+      .checkupDate()
+      .then(update => {
+        if (update) {
+          this.setState({isVisibleModal: true});
+        }
+      })
+      .catch(err => {});
     //   }
     // });
   }
@@ -52,28 +63,28 @@ class UpdateApp extends Component {
       case CodePush.SyncStatus.UP_TO_DATE:
         this.setState({
           syncMessage: 'App up to date.',
-          progress: false,
+          progress: undefined,
           isVisibleModal: false,
         });
         break;
       case CodePush.SyncStatus.UPDATE_IGNORED:
         this.setState({
           syncMessage: 'Update cancelled by user.',
-          progress: false,
+          progress: undefined,
           isVisibleModal: false,
         });
         break;
       case CodePush.SyncStatus.UPDATE_INSTALLED:
         this.setState({
           syncMessage: 'Update installed and will be applied on restart.',
-          progress: false,
+          progress: undefined,
           isVisibleModal: false,
         });
         break;
       case CodePush.SyncStatus.UNKNOWN_ERROR:
         this.setState({
           syncMessage: 'Có lỗi xảy ra vui lòng thử lại!',
-          progress: false,
+          progress: undefined,
         });
         break;
     }
@@ -93,16 +104,16 @@ class UpdateApp extends Component {
 
   getUpdateMetadata() {
     CodePush.getUpdateMetadata(CodePush.UpdateState.RUNNING).then(
-      (metadata) => {
+      metadata => {
         this.setState({
           syncMessage: metadata
             ? JSON.stringify(metadata)
             : 'Running binary version',
-          progress: false,
+          progress: undefined,
         });
       },
-      (error) => {
-        this.setState({syncMessage: 'Error: ' + error, progress: false});
+      error => {
+        this.setState({syncMessage: 'Error: ' + error, progress: undefined});
       },
     );
   }
@@ -119,7 +130,7 @@ class UpdateApp extends Component {
   /** Update pops a confirmation dialog, and then immediately reboots the app */
   syncImmediate() {
     CodePush.sync(
-      {installMode: CodePush.InstallMode.IMMEDIATE, updateDialog: false},
+      {installMode: CodePush.InstallMode.IMMEDIATE, updateDialog: undefined},
       this.codePushStatusDidChange.bind(this),
       this.codePushDownloadDidProgress.bind(this),
     );

@@ -1,23 +1,28 @@
+import {AuthReducer} from 'middlewares/reducers/auth/loginReducer';
 import apis from 'network/apis';
-import React, { useEffect, useState } from 'react';
-import { Platform, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import NotificationApi from 'network/apis/notification/NotificationApi';
+import React, {useEffect, useState} from 'react';
+import {Platform, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import { useSelector } from 'react-redux';
+import {useSelector} from 'react-redux';
 import colors from 'res/colors';
 import sizes from 'res/sizes';
-import { navigate } from './service/RootNavigation';
-import screenName from './screenName';
+import {CommonScreen} from './screenName';
+import {navigate} from './service/RootNavigation';
 
 const CustomBottomTab = ({state, descriptors, navigation}) => {
+  console.log('state: ', state);
   const focusedOptions = descriptors[state.routes[state.index].key].options;
-  const userProfile = useSelector((state) => state.userProfile);
+  const userProfile: AuthReducer = useSelector(
+    (state: any) => state.userProfile,
+  );
   const [badge, setBadge] = useState(0);
   if (focusedOptions.tabBarVisible === false) {
     return null;
   }
   const getBadgeNotification = async () => {
     try {
-      let res = await apis.get(apis.path.getReadNotifications);
+      let res = await NotificationApi.getReadNotification<number>();
       setBadge(res?.data || 0);
     } catch (error) {}
   };
@@ -38,11 +43,12 @@ const CustomBottomTab = ({state, descriptors, navigation}) => {
         const iconName =
           options.tabBarIcon !== undefined ? options.tabBarIcon : route.name;
 
+        console.log('iconName: ', iconName);
         const isFocused = state.index === index;
 
         const renderBadge = () => {
           if (
-            route.name === screenName.NOTIFICATION &&
+            route.name === CommonScreen.NotificationScreen &&
             badge &&
             userProfile?.isLogin
           ) {
@@ -54,9 +60,9 @@ const CustomBottomTab = ({state, descriptors, navigation}) => {
           }
         };
         const onPress = () => {
-          if (route.name === screenName.NOTIFICATION) {
+          if (route.name === CommonScreen.NotificationScreen) {
             if (!userProfile?.isLogin) {
-              navigate(screenName.LOGIN);
+              navigate(CommonScreen.LoginScreen);
               return;
             }
           }
@@ -95,7 +101,7 @@ const CustomBottomTab = ({state, descriptors, navigation}) => {
             />
             {renderBadge()}
             <Text style={{color: isFocused ? colors.default : colors.gray}}>
-              {label(isFocused)}
+              {label}
             </Text>
           </TouchableOpacity>
         );

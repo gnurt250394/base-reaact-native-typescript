@@ -1,5 +1,6 @@
 export interface BaseResponse<T> {
-    data?: T;
-    status?: number;
-    message?: string;
+  data?: T;
+  status?: number;
+  message?: string;
+  error?: any;
 }

@@ -4,4 +4,5 @@ export type LoginParams = {
     latitude: number,
     longitude: number,
     address: string,
+    accessToken: string,
 }
