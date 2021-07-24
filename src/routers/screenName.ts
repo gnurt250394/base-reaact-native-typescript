@@ -17,6 +17,7 @@ export enum UserScreens {
   PaymentScreen = 'PaymentScreen',
   DrawerUserStack = 'DrawerUserStack',
   ListServiceScreen = 'ListServiceScreen',
+  PaymentSuccessScreen = 'PaymentSuccessScreen',
 }
 export enum PartnerScreens {
   HomeScreen = 'HomeScreen',

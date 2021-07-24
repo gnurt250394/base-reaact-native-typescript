@@ -60,33 +60,18 @@ const HomeScreen = ({
     },
     {
       id: 5,
-      name: 'Cắt tóc',
+      name: 'Uốn',
       price: 1000000,
     },
     {
       id: 6,
-      name: 'Gội đầu',
-      price: 200000,
-    },
-    {
-      id: 3,
-      name: 'Lấy ráy tai',
+      name: 'Hấp',
       price: 1000000,
     },
     {
-      id: 4,
-      name: 'Nhuộm',
+      id: 7,
+      name: 'Sấy',
       price: 1000000,
-    },
-    {
-      id: 5,
-      name: 'Cắt tóc',
-      price: 1000000,
-    },
-    {
-      id: 6,
-      name: 'Gội đầu',
-      price: 200000,
     },
   ]);
   React.useLayoutEffect(() => {

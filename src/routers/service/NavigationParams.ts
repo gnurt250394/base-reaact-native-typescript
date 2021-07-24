@@ -9,3 +9,7 @@ export interface LoginParams {
 export type PaymentParams = {
   data: DataHair[];
 };
+export type PaymentSuccessParams = {
+  data: DataHair[];
+  name: string;
+};

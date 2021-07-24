@@ -35,7 +35,7 @@ const PaymentScreen = ({
 }: BaseNavigationProps<MainParamList, UserScreens.PaymentScreen>) => {
   const task = useTasks();
   const [data, setData] = useState(route.params.data || []);
-  const [countItem, setCountItem] = useState(1);
+  const [countItem, setCountItem] = useState(3);
   const onDecrease = (item, index) => {
     if (item.count == 1) return;
     let list = [...data];
@@ -79,7 +79,7 @@ const PaymentScreen = ({
     setCountItem(isShow);
   };
   const renderFooter = () => {
-    if (data.length >= 2) {
+    if (data.length >= 4) {
       return (
         <View>
           {countItem ? (
@@ -92,7 +92,7 @@ const PaymentScreen = ({
             <ButtonBase
               text="Rút gọn"
               textStyle={styles.txtShowMore}
-              onPress={onShowItem(1)}
+              onPress={onShowItem(3)}
             />
           )}
         </View>

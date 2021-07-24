@@ -11,7 +11,11 @@ import colors from 'res/colors';
 import CommonData from './data/CommonData';
 import UserData from './data/UserData';
 import {CommonScreen, UserScreens} from './screenName';
-import {LoginParams, PaymentParams} from './service/NavigationParams';
+import {
+  LoginParams,
+  PaymentParams,
+  PaymentSuccessParams,
+} from './service/NavigationParams';
 import {isReadyRef, navigationRef} from './service/RootNavigation';
 
 const RootStack = createStackNavigator();
@@ -22,6 +26,7 @@ export interface MainParamList extends Record<string, object | undefined> {
 
   //* ************************************ Common screens ************************************* *//
   [UserScreens.PaymentScreen]: PaymentParams;
+  [UserScreens.PaymentSuccessScreen]: PaymentSuccessParams;
 }
 
 // Define multiple groups of screens in objects like this
