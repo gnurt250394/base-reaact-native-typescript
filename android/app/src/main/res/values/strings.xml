@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">APP HEALTH MEDICAL</string>
+    <string name="app_name">Anh Cường HairSalon</string>
     <string name="default_notification_channel_id">jay-channel</string>
     <string name="appCenterAnalytics_whenToEnableAnalytics" moduleConfig="true" translatable="false">ALWAYS_SEND</string>
     <string name="appCenterCrashes_whenToSendCrashes" moduleConfig="true" translatable="false">ALWAYS_SEND</string>

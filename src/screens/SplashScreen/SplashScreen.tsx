@@ -29,8 +29,8 @@ const SplashScreen = ({
       style={styles.container}
       maskElement={
         <View style={styles.containerMaker}>
-          <Text style={styles.txtAppName}>JAY</Text>
-          <Text style={styles.txtAppName2}>Việc làm quanh bạn</Text>
+          <Text style={styles.txtAppName}>Anh Cường HairSalon</Text>
+          {/* <Text style={styles.txtAppName2}>Việc làm quanh bạn</Text> */}
         </View>
       }>
       {/* Shows behind the mask, you can put anything here, such as an image */}
