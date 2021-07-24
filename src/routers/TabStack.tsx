@@ -5,6 +5,7 @@ import NotificationScreen from 'screens/notification/NotificationScreen';
 import {CommonScreen} from './screenName';
 import CustomBottomTab from './CustomBottomTab';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import HistoryScreen from 'screens/history/HistoryScreen';
 const Tab = createBottomTabNavigator();
 
 interface TitleProps {
@@ -17,8 +18,8 @@ const renderLabel = routeName => {
   switch (routeName) {
     case CommonScreen.Home:
       return 'Trang chủ';
-    case CommonScreen.NotificationScreen:
-      return 'Thông báo';
+    case CommonScreen.HistoryScreen:
+      return 'Lịch sử';
     default:
       return '';
   }
@@ -29,8 +30,8 @@ const renderIcon =
     switch (routeName) {
       case CommonScreen.Home:
         return 'home';
-      case CommonScreen.NotificationScreen:
-        return 'notifications';
+      case CommonScreen.HistoryScreen:
+        return 'newspaper';
       default:
         return '';
     }
@@ -55,8 +56,8 @@ function TabsStack() {
       /> */}
       <Tab.Screen name={CommonScreen.Home} component={HomeScreen} />
       <Tab.Screen
-        name={CommonScreen.NotificationScreen}
-        component={NotificationScreen}
+        name={CommonScreen.HistoryScreen}
+        component={HistoryScreen}
         options={{unmountOnBlur: true}}
       />
     </Tab.Navigator>

@@ -97,10 +97,10 @@ const CustomBottomTab = ({state, descriptors, navigation}) => {
             <Ionicons
               name={iconName(isFocused)}
               size={20}
-              color={isFocused ? colors.default : colors.gray}
+              color={isFocused ? colors.buttonColor : colors.gray}
             />
             {renderBadge()}
-            <Text style={{color: isFocused ? colors.default : colors.gray}}>
+            <Text style={{color: isFocused ? colors.buttonColor : colors.gray}}>
               {label}
             </Text>
           </TouchableOpacity>

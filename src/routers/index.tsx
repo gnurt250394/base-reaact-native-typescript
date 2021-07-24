@@ -10,21 +10,8 @@ import {useSelector} from 'react-redux';
 import colors from 'res/colors';
 import CommonData from './data/CommonData';
 import UserData from './data/UserData';
-import {CommonScreen} from './screenName';
-import {
-  CreateJobParams,
-  DetailCvParams,
-  DetailJobParams,
-  DetailPartnerParams,
-  DetailRequestInterviewParams,
-  EditProfileParams,
-  ForgotPasswordParams,
-  GooglePlacesInputParams,
-  LoginParams,
-  MapDirectionParams,
-  SelectLocationParams,
-  UpdateFieldParams,
-} from './service/NavigationParams';
+import {CommonScreen, UserScreens} from './screenName';
+import {LoginParams, PaymentParams} from './service/NavigationParams';
 import {isReadyRef, navigationRef} from './service/RootNavigation';
 
 const RootStack = createStackNavigator();
@@ -32,19 +19,9 @@ const Stack = createStackNavigator();
 export interface MainParamList extends Record<string, object | undefined> {
   // ************************** auth *********************************//
   [CommonScreen.LoginScreen]: LoginParams;
-  [CommonScreen.ForgotPasswordScreen]: ForgotPasswordParams;
 
   //* ************************************ Common screens ************************************* *//
-  [CommonScreen.UpdateFieldScreen]: UpdateFieldParams;
-  [CommonScreen.GooglePlacesInputScreen]: GooglePlacesInputParams;
-  [CommonScreen.DetaiJobScreen]: DetailJobParams;
-  [CommonScreen.EditProfileScreen]: EditProfileParams;
-  [CommonScreen.DetailPartnerScreen]: DetailPartnerParams;
-  [CommonScreen.DetailRequestInterviewScreen]: DetailRequestInterviewParams; //
-  [CommonScreen.MapDirectionScreen]: MapDirectionParams; //
-  [CommonScreen.SelectLocationScreen]: SelectLocationParams; //
-  [CommonScreen.DetailCvScreen]: DetailCvParams; //
-  [CommonScreen.CreateJobScreen]: CreateJobParams; //
+  [UserScreens.PaymentScreen]: PaymentParams;
 }
 
 // Define multiple groups of screens in objects like this

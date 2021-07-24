@@ -8,8 +8,8 @@ import {
   StyleProp,
   ViewStyle,
 } from 'react-native';
-import Header from './Header/HeaderBase';
-interface Props {
+import Header, {HeaderBaseProps} from './Header/HeaderBase';
+interface Props extends HeaderBaseProps {
   children: React.ReactNode;
   hideHeader?: boolean;
   style?: StyleProp<ViewStyle>;

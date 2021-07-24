@@ -80,17 +80,17 @@ const styles = StyleSheet.create({
   buttonBack: {
     alignItems: 'center',
     justifyContent: 'center',
+    tintColor: colors.textColor,
   },
   flex: {flex: 1},
   txtTitle: {
-    fontSize: sizes._14sdp,
-    color: colors.white,
-    fontWeight: 'bold',
+    fontSize: sizes._18sdp,
+    color: colors.textColor,
+    fontWeight: '600',
   },
   containerTitle: {
     flex: 5,
-    alignItems: 'flex-start',
-    paddingRight: 10,
+    alignItems: 'center',
   },
   iconBack: {
     height: 18,
@@ -108,7 +108,7 @@ const styles = StyleSheet.create({
     paddingBottom: 10,
   },
   container: {
-    backgroundColor: colors.default,
+    backgroundColor: colors.white,
     paddingTop: sizes._statusbar_height,
   },
 });

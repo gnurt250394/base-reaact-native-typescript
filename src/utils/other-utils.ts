@@ -1,7 +1,6 @@
-
 import strings from 'res/strings';
 
-export const renderPrice = (item) => {
+export const renderPrice = item => {
   if (item?.fromPrice == 0 && item?.toPrice == 0) return 'Thoả thuận';
   return (
     item?.fromPrice?.formatPrice() +
@@ -11,7 +10,7 @@ export const renderPrice = (item) => {
     'đ'
   );
 };
-export const getLevel = (level) => {
+export const getLevel = level => {
   switch (level) {
     case strings.level.unskilled:
       return strings.msg.level.unskilled;
@@ -29,4 +28,12 @@ export const getLevel = (level) => {
     default:
       return '';
   }
+};
+
+export const getTotal = (data: any[]): number => {
+  let list = data.filter(e => e?.count);
+  let price = list.reduce((acc, current) => {
+    return acc + (current?.count || 0) * current.price;
+  }, 0);
+  return price;
 };

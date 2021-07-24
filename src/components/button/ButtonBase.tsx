@@ -22,6 +22,7 @@ interface ButtonBaseProps extends TouchableOpacityProps {
   iconRight?: ImageSourcePropType;
   iconLeftStyle?: StyleProp<ImageStyle>;
   iconRightStyle?: StyleProp<ImageStyle>;
+  buttonRef?: any;
 }
 
 const ButtonBase = ({
@@ -32,10 +33,14 @@ const ButtonBase = ({
   iconRight,
   iconLeftStyle,
   iconRightStyle,
+  buttonRef,
   ...props
 }: ButtonBaseProps) => {
   return (
-    <TouchableOpacity style={[styles.container, style]} {...props}>
+    <TouchableOpacity
+      ref={buttonRef}
+      style={[styles.container, style]}
+      {...props}>
       {!!iconLeft && (
         <Image source={iconLeft} style={[styles.icon, iconLeftStyle]} />
       )}

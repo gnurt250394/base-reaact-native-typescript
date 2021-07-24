@@ -11,18 +11,15 @@ import {
   ListRenderItem,
   TouchableOpacity,
   Image,
-  Platform,
-  UIManager,
-  LayoutAnimation,
 } from 'react-native';
 import colors from 'res/colors';
 import images from 'res/images';
 import sizes from 'res/sizes';
 import {MainParamList} from 'routers';
 import {BaseNavigationProps} from 'routers/BaseNavigationProps';
-import {CommonScreen, UserScreens} from 'routers/screenName';
+import {UserScreens} from 'routers/screenName';
 import {getTotal} from 'utils/other-utils';
-import Item from '../services/Item';
+import Item from './Item';
 
 interface ListServiceScreenProps {}
 export interface DataHair {
@@ -33,7 +30,7 @@ export interface DataHair {
   count?: number;
 }
 
-const HomeScreen = ({
+const ListServiceScreen = ({
   navigation,
   route,
 }: BaseNavigationProps<MainParamList>) => {
@@ -89,19 +86,12 @@ const HomeScreen = ({
       price: 200000,
     },
   ]);
-  React.useLayoutEffect(() => {
-    if (Platform.OS === 'android') {
-      UIManager.setLayoutAnimationEnabledExperimental(true);
-    }
-  }, []);
   const onDecrease = (item, index) => {
-    LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
     let list = [...data];
     list[index]['count'] = Number(item.count || 0) - 1;
     setData(list);
   };
   const onIncrease = (item, index) => {
-    LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
     let list = [...data];
     list[index]['count'] = Number(item.count || 0) + 1;
     setData(list);
@@ -122,15 +112,9 @@ const HomeScreen = ({
     let list = data.filter(e => e?.count);
     navigation.navigate(UserScreens.PaymentScreen, {data: list});
   };
-  const goToHistory = () => navigation.navigate(CommonScreen.HistoryScreen);
+
   return (
-    <Container
-      hideBackButton
-      title="Trang chủ"
-      style={styles.container}
-      buttonRight={
-        <ButtonBase iconLeft={images.ic_history} onPress={goToHistory} />
-      }>
+    <Container hideBackButton title="Trang chủ" style={styles.container}>
       <FlatList
         data={data}
         renderItem={_renderItem}
@@ -142,30 +126,24 @@ const HomeScreen = ({
         showsVerticalScrollIndicator={false}
         keyExtractor={_keyExtractor}
       />
-      {!!Number(getTotal(data)) && (
-        <View style={styles.containerBottom}>
-          <View style={{flexDirection: 'row', alignItems: 'center'}}>
-            <Image source={images.ic_bill} style={styles.icBill} />
-            <View>
-              <TextBase text={'Tổng cộng'} style={styles.txtTotal} />
-              <TextBase
-                text={getTotal(data).formatPrice() + 'đ'}
-                style={styles.txtPriceTotal}
-              />
-            </View>
+      <View style={styles.containerBottom}>
+        <View style={{flexDirection: 'row', alignItems: 'center'}}>
+          <Image source={images.ic_bill} style={styles.icBill} />
+          <View>
+            <TextBase text={'Tổng cộng'} style={styles.txtTotal} />
+            <TextBase
+              text={getTotal(data).formatPrice() + 'đ'}
+              style={styles.txtPriceTotal}
+            />
           </View>
-          <ButtonBase
-            text="Xác nhận"
-            style={styles.buttonPay}
-            onPress={onPay}
-          />
         </View>
-      )}
+        <ButtonBase text="Xác nhận" style={styles.buttonPay} onPress={onPay} />
+      </View>
     </Container>
   );
 };
 
-export default HomeScreen;
+export default ListServiceScreen;
 
 const styles = StyleSheet.create({
   containerBottom: {

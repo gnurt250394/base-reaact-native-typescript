@@ -127,6 +127,7 @@ const styles = StyleSheet.create({
     color: colors.teal,
     fontSize: 14,
     textAlign: 'left',
+    paddingBottom: sizes._4sdp,
   },
   input: {
     flex: 1,

@@ -1,13 +1,13 @@
 export default {
-  default: '#ff9933',
-  linear1:'#ff8c1a',
-  linear2:'#ffb366',
+  default: '#F3F1FF',
+  linear1: '#ff8c1a',
+  linear2: '#ffb366',
   menuBg: '#0E1130',
-  buttonColor: "#3A6ED4",
+  buttonColor: '#6043F5',
   activeColor: '#212030',
   inActiveColor: '#7D899B',
   textColor: '#171721',
-
+  border: '#D1C8FF',
 
   sencondary: '#6495ed',
   transparent: 'transparent',

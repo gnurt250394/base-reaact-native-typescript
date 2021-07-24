@@ -1,5 +1,6 @@
 import {InternetConnection} from 'components/InternetConnection';
 import PushController from 'components/notification/PushController';
+import {TasksProvider} from 'components/TaskProvider';
 import UpdateApp from 'components/UpdateApp';
 import React, {Component, ReactNode} from 'react';
 import {
@@ -10,20 +11,22 @@ import {
   StatusBar,
 } from 'react-native';
 import colors from 'res/colors';
-import stringUtils from 'utils/string-utils';
+import 'utils/string-utils';
 LogBox.ignoreLogs(['Remote debugger']);
 interface Props {
   children?: ReactNode;
 }
 const RootView = ({children}: Props) => {
   return (
-    <View style={[styles.container]}>
-      <StatusBar backgroundColor={colors.transparent} translucent={true} />
-      {!__DEV__ && <UpdateApp />}
-      {children}
-      {/* <PushController /> */}
-      <InternetConnection />
-    </View>
+    <TasksProvider>
+      <View style={[styles.container]}>
+        <StatusBar backgroundColor={colors.transparent} translucent={true} />
+        {!__DEV__ && <UpdateApp />}
+        {children}
+        {/* <PushController /> */}
+        <InternetConnection />
+      </View>
+    </TasksProvider>
   );
 };
 
