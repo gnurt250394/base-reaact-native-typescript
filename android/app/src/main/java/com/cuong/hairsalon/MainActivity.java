@@ -1,4 +1,4 @@
-package com.healthmedical;
+package com.cuong.hairsalon;
 
 import com.facebook.react.ReactActivity;
 

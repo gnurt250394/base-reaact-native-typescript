@@ -9,7 +9,7 @@
       "client_info": {
         "mobilesdk_app_id": "1:897010684326:android:bf891139cf6a754924bf67",
         "android_client_info": {
-          "package_name": "com.healthmedical"
+          "package_name": "com.cuong.hairsalon"
         }
       },
       "oauth_client": [
@@ -34,7 +34,7 @@
               "client_id": "897010684326-l89s6vqvnf3d5d830k9us7mnaja7noib.apps.googleusercontent.com",
               "client_type": 2,
               "ios_info": {
-                "bundle_id": "com.healthmedical"
+                "bundle_id": "com.cuong.hairsalon"
               }
             }
           ]

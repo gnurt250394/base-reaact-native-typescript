@@ -132,7 +132,7 @@ android {
     }
 
     defaultConfig {
-        applicationId "com.healthmedical"
+        applicationId "com.cuong.hairsalon"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1

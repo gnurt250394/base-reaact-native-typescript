@@ -27,7 +27,6 @@ import LoadingComponent from 'components/Loading/LoadingComponent';
 import LoadingManager from 'components/Loading/LoadingManager';
 import {LocalizationProvider} from 'assets/languages/Translations';
 import Realm from 'realm';
-global.Realm = Realm;
 const App = () => {
   const loadingRef: any = React.useRef();
   React.useEffect(() => {

@@ -508,7 +508,9 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = healthmedical/healthmedical.entitlements;
-				CURRENT_PROJECT_VERSION = 1;
+				CODE_SIGN_STYLE = Manual;
+				CURRENT_PROJECT_VERSION = 2;
+				DEVELOPMENT_TEAM = 957PVJ39LH;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = healthmedical/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -520,8 +522,9 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.healthmedical;
+				PRODUCT_BUNDLE_IDENTIFIER = com.cuong.hairsalon;
 				PRODUCT_NAME = healthmedical;
+				PROVISIONING_PROFILE_SPECIFIER = "development health test";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
@@ -535,7 +538,9 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = healthmedical/healthmedical.entitlements;
-				CURRENT_PROJECT_VERSION = 1;
+				CODE_SIGN_STYLE = Manual;
+				CURRENT_PROJECT_VERSION = 2;
+				DEVELOPMENT_TEAM = 957PVJ39LH;
 				INFOPLIST_FILE = healthmedical/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -546,8 +551,9 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.healthmedical;
+				PRODUCT_BUNDLE_IDENTIFIER = com.cuong.hairsalon;
 				PRODUCT_NAME = healthmedical;
+				PROVISIONING_PROFILE_SPECIFIER = "development health test";
 				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
