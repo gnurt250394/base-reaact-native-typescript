@@ -21,7 +21,7 @@
 		<key>CFBundleSignature</key>
 		<string>????</string>
 		<key>CFBundleVersion</key>
-		<string>$(CURRENT_PROJECT_VERSION)</string>
+		<string>1</string>
 		<key>CodePushDeploymentKey</key>
 		<string>2jE2_xY8C3510uNuAEHSmfiPKHuHYibUtpW4Y</string>
 		<key>LSApplicationQueriesSchemes</key>

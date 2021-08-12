@@ -524,7 +524,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.cuong.hairsalon;
 				PRODUCT_NAME = healthmedical;
-				PROVISIONING_PROFILE_SPECIFIER = "development health test";
+				PROVISIONING_PROFILE_SPECIFIER = "development hairsalon test";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
@@ -541,6 +541,7 @@
 				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 957PVJ39LH;
+				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = healthmedical/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -553,7 +554,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.cuong.hairsalon;
 				PRODUCT_NAME = healthmedical;
-				PROVISIONING_PROFILE_SPECIFIER = "development health test";
+				PROVISIONING_PROFILE_SPECIFIER = "development hairsalon test";
 				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
