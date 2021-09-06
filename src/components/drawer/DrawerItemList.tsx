@@ -17,7 +17,7 @@ import {
   DrawerNavigationHelpers,
 } from '@react-navigation/drawer/lib/typescript/src/types';
 import {View} from 'react-native';
-import { UserScreens } from 'routers/screenName';
+import { Routes } from 'configs';
 type Props = {
   state: DrawerNavigationState<ParamListBase>;
   navigation: DrawerNavigationHelpers;
@@ -31,7 +31,7 @@ export default function DrawerItemList(props: Props) {
   const buildLink = useLinkBuilder();
 
   // Add your logic here
-  const visibleRoutes = [UserScreens.HomeScreen, 'profile', 'resources', 'faq'];
+  const visibleRoutes = [Routes.HomeScreen, 'profile', 'resources', 'faq'];
 
   const drawerList = props.state.routes.map((route: any, i: number) => {
     const focused = i === props.state.index;

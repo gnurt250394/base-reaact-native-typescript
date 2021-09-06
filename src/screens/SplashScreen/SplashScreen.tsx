@@ -1,19 +1,19 @@
 import React, {useEffect} from 'react';
 import {View, Text, Image} from 'react-native';
 import MaskedView from '@react-native-community/masked-view';
-import {navigate, reset} from 'routers/service/RootNavigation';
 import {useSelector} from 'react-redux';
 import styles from './styles';
 
 import strings from 'res/strings';
-import {BaseNavigationProps} from 'routers/BaseNavigationProps';
-import {MainParamList} from 'routers';
 import {AuthReducer, UserProfile} from 'middlewares/reducers/auth/loginReducer';
-import {CommonScreen} from 'routers/screenName';
+import {BaseNavigationProps} from 'navigation/BaseNavigationProps';
+import {MainParamList} from 'navigation/service/NavigationParams';
+import {Routes} from 'configs';
+import {reset} from 'navigation/service/RootNavigation';
 
 const SplashScreen = ({
   navigation,
-}: BaseNavigationProps<MainParamList, CommonScreen.Splash>) => {
+}: BaseNavigationProps<MainParamList, Routes.SplashScreen>) => {
   const userProfile: AuthReducer = useSelector(
     (state: any) => state.UserProfile,
   );
@@ -21,7 +21,7 @@ const SplashScreen = ({
   useEffect(() => {
     setTimeout(() => {
       console.log('userProfile?.position: ', userProfile?.position);
-      reset(CommonScreen.Home);
+      reset(Routes.MainTab);
     }, 2000);
   }, []);
   return (

@@ -17,7 +17,6 @@ import {
 } from 'react-native';
 import 'react-native-gesture-handler';
 import RootView from './src/RootView';
-import RootApp from './src/routers';
 import {PersistGate} from 'redux-persist/integration/react';
 import {Provider} from 'react-redux';
 import {store, persistor} from 'middlewares/stores';
@@ -26,6 +25,7 @@ import {MenuProvider} from 'react-native-popup-menu';
 import LoadingComponent from 'components/Loading/LoadingComponent';
 import LoadingManager from 'components/Loading/LoadingManager';
 import {LocalizationProvider} from 'assets/languages/Translations';
+import RootApp from 'navigation';
 const App = () => {
   const loadingRef: any = React.useRef();
   React.useEffect(() => {

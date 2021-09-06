@@ -1,16 +1,16 @@
 import { ActionPersist } from 'middlewares/actions/ActionData';
 import types from 'middlewares/actions/actionTypes';
 export interface LanguagesReducer {
-  language: string
+  language?: string
 }
 const initialState: LanguagesReducer = {
-  language: 'vi',
+  language: undefined,
 };
 
 const languageReducer = (state = initialState, action: ActionPersist<LanguagesReducer>) => {
   switch (action.type) {
     case types.CHANGE_LANGUAGE: {
-      return { language: action.data };
+      return { language: action.payload };
     }
     case 'persist/REHYDRATE':
       if (action.payload?.language) {

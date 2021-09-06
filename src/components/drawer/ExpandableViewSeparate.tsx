@@ -32,8 +32,6 @@ import {useSelector} from 'react-redux';
 import colors from 'res/colors';
 import images from 'res/images';
 import sizes from 'res/sizes';
-import {CommonScreen} from 'routers/screenName';
-import CONTENT, {dataPartner, dataUser} from './data';
 export interface SubMenu {
   id: number;
   value: string;

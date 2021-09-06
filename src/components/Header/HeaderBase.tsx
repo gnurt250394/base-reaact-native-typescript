@@ -1,22 +1,20 @@
 import {useNavigation} from '@react-navigation/native';
+import {Routes} from 'configs';
+import ButtonIcon from 'elements/Buttons/ButtonIcon';
+import ButtonIconHeader from 'elements/Buttons/ButtonIconHeader';
+import Text from 'elements/Text';
 import React from 'react';
 import {
-  View,
-  Image,
-  Text,
-  SafeAreaView,
-  Platform,
-  StatusBar,
-  TouchableOpacity,
-  StyleSheet,
   ImageSourcePropType,
+  SafeAreaView,
+  StyleSheet,
+  View,
 } from 'react-native';
-import images from 'res/images';
-
 import colors from 'res/colors';
+import images from 'res/images';
 import sizes from 'res/sizes';
-import ButtonBase from 'components/button/ButtonBase';
-import {CommonScreen} from 'routers/screenName';
+import scale from 'utils/scale';
+
 export interface HeaderBaseProps {
   title?: string;
   hideBackButton?: boolean;
@@ -38,7 +36,7 @@ const HeaderBase = ({
   const router = useNavigation();
 
   const onPressBack = () => (onBack ? onBack() : router.goBack());
-  const onPressRight = () => router.navigate(CommonScreen.NotificationScreen);
+  const onPressRight = () => router.navigate(Routes.NotificationScreen);
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.groupHeader}>
@@ -46,28 +44,19 @@ const HeaderBase = ({
           {hideBackButton ? null : buttonLeft ? (
             buttonLeft
           ) : (
-            <ButtonBase
+            <ButtonIconHeader
               onPress={onPressBack}
-              hitSlop={{top: 15, left: 15, right: 15, bottom: 15}}
-              iconLeft={iconLeft ? iconLeft : images.ic_back}
-              style={[styles.buttonBack]}
+              icon={iconLeft ? iconLeft : images.ic_back}
+              isLeft
             />
           )}
         </View>
         <View style={styles.containerTitle}>
-          <Text style={styles.txtTitle}>{title}</Text>
+          <Text semiBold type="H5">
+            {title}
+          </Text>
         </View>
-        <View style={styles.button}>
-          {hideButtonRight ? null : buttonRight ? (
-            buttonRight
-          ) : (
-            <ButtonBase
-              onPress={onPressRight}
-              iconLeft={images.ic_notification}
-              style={styles.buttonHeader}
-            />
-          )}
-        </View>
+        {!!buttonRight && buttonRight}
       </View>
     </SafeAreaView>
   );
@@ -98,9 +87,10 @@ const styles = StyleSheet.create({
     resizeMode: 'contain',
   },
   button: {
-    flex: 2,
+    flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
+    paddingHorizontal: scale(10),
   },
   groupHeader: {
     flexDirection: 'row',
@@ -108,7 +98,7 @@ const styles = StyleSheet.create({
     paddingBottom: 10,
   },
   container: {
-    backgroundColor: colors.default,
+    backgroundColor: colors.White,
     paddingTop: sizes._statusbar_height,
   },
 });

@@ -3,9 +3,6 @@ import Container from 'components/Container';
 import InputBase from 'components/Input/InputBase';
 import * as React from 'react';
 import {Text, View, StyleSheet, ScrollView} from 'react-native';
-import {MainParamList} from 'routers';
-import {BaseNavigationProps} from 'routers/BaseNavigationProps';
-import {CommonScreen, UserScreens} from 'routers/screenName';
 import {useFormik} from 'formik';
 import {LOGIN_FORM_SCHEMA} from './Constant';
 import colors from 'res/colors';
@@ -14,19 +11,20 @@ import strings from 'res/strings';
 import {LocalizationContext} from 'assets/languages/Translations';
 import LinearGradient from 'react-native-linear-gradient';
 import TextBase from 'components/text/TextBase';
-import {TypeScreenParam} from 'routers/service/NavigationParams';
 import {useDispatch} from 'react-redux';
-import {login, register} from 'middlewares/actions/auth/actionLogin';
 import AuthApi from 'network/apis/auth/AuthApi';
 import ResponseCode from 'network/ResponseCode';
 import snackbarUtils from 'utils/snackbar-utils';
 import ModalOtp from 'components/ModalOtp';
 import {useMemo} from 'react';
+import { BaseNavigationProps } from 'navigation/BaseNavigationProps';
+import { MainParamList } from 'navigation/service/NavigationParams';
+import { Routes } from 'configs';
 
 const LoginScreen = ({
   navigation,
   route,
-}: BaseNavigationProps<MainParamList, CommonScreen.LoginScreen>) => {
+}: BaseNavigationProps<MainParamList, Routes.LoginScreen>) => {
   const context = React.useContext(LocalizationContext);
   const [isVisible, setIsVisible] = React.useState(false);
   const [isSendOtp, setIsSendOtp] = React.useState(false);

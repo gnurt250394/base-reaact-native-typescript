@@ -20,12 +20,12 @@ import ExpandableViewSeparate from './ExpandableViewSeparate';
 import images from 'res/images';
 import sizes from 'res/sizes';
 import {useDispatch, useSelector} from 'react-redux';
-import {logout, onSelectPosition} from 'middlewares/actions/auth/actionLogin';
+import {onSelectPosition} from 'middlewares/actions/auth/actionLogin';
 import {AuthReducer} from 'middlewares/reducers/auth/loginReducer';
 import TextBase from 'components/text/TextBase';
 import ButtonBase from 'components/button/ButtonBase';
-import {CommonScreen, UserScreens} from 'routers/screenName';
 import {ROLE, RoleType} from '../../common/Constants';
+import { Routes } from 'configs';
 // import DrawerItemList from './DrawerItemList';
 
 const CustomDrawer = ({progress, ...props}: DrawerContentComponentProps) => {
@@ -39,14 +39,14 @@ const CustomDrawer = ({progress, ...props}: DrawerContentComponentProps) => {
   );
   const dispatch = useDispatch();
   const onLogout = () => {
-    dispatch(logout());
+    // dispatch(logout());
     props.navigation.closeDrawer();
   };
   const onLogin = () => {
-    props.navigation.navigate(CommonScreen.LoginScreen, {typeScreen: 'login'});
+    // props.navigation.navigate(Routes.LoginScreen, {typeScreen: 'login'});
   };
   const switchPosition = async () => {
-    if (userProfile?.isLogin) await dispatch(logout());
+    // if (userProfile?.isLogin) await dispatch(logout());
     if (userProfile.position == ROLE.user) {
       dispatch(onSelectPosition(ROLE.partner));
     } else {
@@ -80,7 +80,7 @@ const CustomDrawer = ({progress, ...props}: DrawerContentComponentProps) => {
           )}
         </View>
         <ExpandableViewSeparate {...props} />
-        <DrawerItem
+        {/* <DrawerItem
           {...props}
           label={
             userProfile.position == ROLE.user ? 'Nhà tuyển dụng' : 'Ứng viên'
@@ -92,8 +92,8 @@ const CustomDrawer = ({progress, ...props}: DrawerContentComponentProps) => {
               style={[styles.icon, {tintColor: colors.default}]}
             />
           )}
-        />
-        {userProfile?.isLogin ? (
+        /> */}
+        {/* {userProfile?.isLogin ? (
           <DrawerItem
             {...props}
             label="Đăng xuất"
@@ -105,7 +105,7 @@ const CustomDrawer = ({progress, ...props}: DrawerContentComponentProps) => {
               />
             )}
           />
-        ) : null}
+        ) : null} */}
       </Animated.View>
     </DrawerContentScrollView>
   );
@@ -124,7 +124,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   txtName: {
-    color: colors.white,
+    color: colors.White,
     fontSize: sizes._16sdp,
     fontWeight: '600',
     paddingTop: sizes._15sdp,
